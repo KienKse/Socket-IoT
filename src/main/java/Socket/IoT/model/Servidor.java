@@ -1,17 +1,18 @@
-package Socket.IoT;
+package Socket.IoT.model;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Calendar;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.xml.bind.DataBindingException;
 
 public class Servidor {
-// OK - JESSICA{Cliente}
 	public static void main(String args[]) throws IOException {
 		try {
 			final int porta = 3322;
@@ -24,7 +25,8 @@ public class Servidor {
 				
 				ObjectOutputStream mensagemServidor = new ObjectOutputStream(socket.getOutputStream());
 				mensagemServidor.flush();
-				mensagemServidor.writeObject("ObjectOutputStream method");
+				mensagemServidor.writeObject(socket.getInetAddress().getHostAddress()
+						+ " ATIVADO at: " + Calendar.getInstance().getTime());
 				
 				OutputStream os = socket.getOutputStream();
 				PrintWriter pw = new PrintWriter(os, true);
@@ -35,8 +37,16 @@ public class Servidor {
 				
 				Scanner sc = new Scanner(socket.getInputStream());
 				while (sc.hasNextLine()) {
+					if(Math.random()*0.5 > 1) {
+						mensagemServidor.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "\r\n");
+						Thread.sleep(1000);
+					}
 					System.out.println(sc.nextLine());					
 				}
+				
+				
+				mensagemServidor.flush();
+				mensagemServidor.writeObject("DESATIVADO");
 				
 //				System.out.println("msg: " + str);
 				

@@ -1,0 +1,18 @@
+{
+	"Local": {
+		"ip":"localhost",
+		"porta":"3322"
+	},
+	"Temperatura_1":{
+		"ip":"192.168.1.17",
+		"porta":"8080"
+	},
+	"Temperatura_2": {
+		"ip":"192.168.1.18",
+		"porta":"9980"
+	},
+	"Umidade": {
+		"ip":"192.168.6.12",
+		"porta":"8089"
+	}
+}
