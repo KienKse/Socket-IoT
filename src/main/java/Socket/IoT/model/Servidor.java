@@ -16,6 +16,7 @@ public class Servidor {
 	public static void main(String args[]) throws IOException {
 		try {
 			final int porta = 3322;
+			int delay = 1500;
 			System.out.println("Server alocado na porta: " + porta);
 			ServerSocket serverSocket = new ServerSocket(porta);
 			while (serverSocket.isBound()) {
@@ -26,34 +27,14 @@ public class Servidor {
 				ObjectOutputStream mensagemServidor = new ObjectOutputStream(socket.getOutputStream());
 				mensagemServidor.flush();
 				mensagemServidor.writeObject(socket.getInetAddress().getHostAddress()
-						+ " ATIVADO at: " + Calendar.getInstance().getTime());
+						+ " ATIVADO " + delay);
 				
-				OutputStream os = socket.getOutputStream();
-				PrintWriter pw = new PrintWriter(os, true);
-				pw.println("Qual seu nome para, ..Ping?");
-	
-//				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//				String str = br.readLine();
-				
-				Scanner sc = new Scanner(socket.getInputStream());
-				while (sc.hasNextLine()) {
-					if(Math.random()*0.5 > 1) {
-						mensagemServidor.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "\r\n");
-						Thread.sleep(1000);
-					}
-					System.out.println(sc.nextLine());					
+				while (true) {
+					ObjectOutputStream msg = new ObjectOutputStream(socket.getOutputStream());
+					msg.flush();
+					msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "ºF\r\n");
+					Thread.sleep(delay);
 				}
-				
-				
-				mensagemServidor.flush();
-				mensagemServidor.writeObject("DESATIVADO");
-				
-//				System.out.println("msg: " + str);
-				
-//				pw.println("Lá vai, " + str);
-//				pw.close();
-//				socket.close();
-//				System.out.println("Pong: " + str);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());

@@ -1,12 +1,9 @@
 package Socket.IoT.model;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -20,7 +17,9 @@ public class Cliente {
 			int porta = 0;
 			System.out.println("GO AHEAD BEAUTY... ");
 			Scanner sc = new Scanner(System.in);
-			String[] comando = sc.nextLine().split(" ");
+//			String[] comando = sc.nextLine().split(" ");
+			String[] comando = {"", "conectar", "Local"};
+
 			if (comando[1].equalsIgnoreCase("CONECTAR")) {
 
 				JSONParser jsonParser = new JSONParser();
@@ -37,46 +36,25 @@ public class Cliente {
 					Socket socket = new Socket(host, porta);
 
 					while(true){
-						//							ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
-						//							String mensagemDoServidor = (String) entrada.readObject();
-						//							System.out.println(mensagemDoServidor);
-
-						BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-						PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+//						BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 						ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
 						String mensagemDoServidor = null;
 						try {
 							mensagemDoServidor = (String) entrada.readObject();
 						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						System.out.println(mensagemDoServidor);
-						//							if(br.readLine() != null)
-						//								System.out.println("SERVER_LOG: " + br.readLine());
 
-						//							BufferedReader userInputBR = new BufferedReader(new InputStreamReader(System.in));
-						//							String userInput = userInputBR.readLine();
+//						Scanner sc2 = new Scanner(socket.getInputStream());
+//						while (sc2.hasNextLine()) {
+//							//								System.out.println(sc.nextLine());
+//							out.flush();
+//							out.println(sc.nextLine() + "\r\n");
+//						}
 
-						Scanner sc2 = new Scanner(socket.getInputStream());
-						while (sc2.hasNextLine()) {
-							//								System.out.println(sc.nextLine());
-							out.flush();
-							out.println(sc.nextLine() + "\r\n");
-						}
-
-
-						//							if ("bye".equalsIgnoreCase(userInput)) {
-						//								socket.close();
-						//								break;
-						//							}
-
-						//							out.flush();
-						//							out.println(userInput + "\r\n" + "\r\n");
-						//							out.print("\r\n");
-
-						System.out.println("SERVER_LOG: " + br.readLine());
+//						System.out.println("SERVER_LOG: " + br.readLine());
 					}					
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -85,13 +63,6 @@ public class Cliente {
 				}
 
 			}
-			//		} catch (SocketException e) {
-			//			System.out.println("!!Conexão Encerrada!!");
-			//			// TODO: handle exception
-			//		} catch (IOException e) {
-			//			System.out.println("Erro de conexão");
-			//			// TODO: handle exception
-			//		}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
