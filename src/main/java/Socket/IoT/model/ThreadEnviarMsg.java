@@ -31,10 +31,10 @@ public class ThreadEnviarMsg implements Runnable {
 			try {
 				ObjectOutputStream msg = new ObjectOutputStream(socket.getOutputStream());
 				msg.flush();
-				msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "ºF\r\n");
+				msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "oF\r\n");
 				Thread.sleep(delay);
 			} catch (InterruptedException e) {
-				System.out.println("thread - Erro de Iterrupção");
+				System.out.println("thread - Erro de Iterrupcao");
 				user = false;
 			} catch (IOException e) {
 				System.out.println("Desconectado");

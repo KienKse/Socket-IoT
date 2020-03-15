@@ -60,7 +60,7 @@ public class Cliente {
 				} catch (SocketException e) {
 					System.out.println("Erro de socket");
 				} catch (IOException e) {
-					System.out.println("Erro de conexão");
+					System.out.println("Erro de conexao");
 				}
 
 			} else {

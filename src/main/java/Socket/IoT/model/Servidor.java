@@ -17,7 +17,7 @@ public class Servidor {
 	public static void main(String args[]) throws IOException {
 		try {
 			final int porta = 3322;
-			int delay = 1000;
+			int delay = 30000;
 			System.out.println("Server alocado na porta: " + porta);
 			ServerSocket serverSocket = new ServerSocket(porta);
 			while (serverSocket.isBound()) {
@@ -28,7 +28,7 @@ public class Servidor {
 				ObjectOutputStream mensagemServidor = new ObjectOutputStream(socket.getOutputStream());
 				mensagemServidor.flush();
 				mensagemServidor.writeObject(socket.getInetAddress().getHostAddress()
-						+ " ATIVADO " + delay);
+						+ " ATIVADO " + (delay/1000));
 				
 				new Thread(new ThreadEnviarMsg(socket, delay)).start();
 				
@@ -36,7 +36,7 @@ public class Servidor {
 //					try {
 //						ObjectOutputStream msg = new ObjectOutputStream(socket.getOutputStream());
 //						msg.flush();
-//						msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "ºF\r\n");
+//						msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "oF\r\n");
 //						Thread.sleep(delay);
 //					} catch (SocketException e) {
 //						// TODO: handle exception
