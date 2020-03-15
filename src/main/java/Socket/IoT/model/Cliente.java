@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 import org.json.simple.JSONObject;
@@ -15,10 +16,10 @@ public class Cliente {
 		try {
 			String host = null;
 			int porta = 0;
-			System.out.println("GO AHEAD BEAUTY... ");
+			System.out.println("GO AHEAD BEAUTY...\nSe conecte");
 			Scanner sc = new Scanner(System.in);
-//			String[] comando = sc.nextLine().split(" ");
-			String[] comando = {"", "conectar", "Local"};
+			String[] comando = sc.nextLine().split(" ");
+//			String[] comando = {"", "conectar", "Local"};
 
 			if (comando[1].equalsIgnoreCase("CONECTAR")) {
 
@@ -36,8 +37,6 @@ public class Cliente {
 					Socket socket = new Socket(host, porta);
 
 					while(true){
-//						BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
 						ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
 						String mensagemDoServidor = null;
 						try {
@@ -58,13 +57,17 @@ public class Cliente {
 					}					
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
+				} catch (SocketException e) {
+					System.out.println("Erro de socket");
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.out.println("Erro de conexão");
 				}
 
+			} else {
+				System.out.println("O correto seria...\nDP1 CONECTAR DP2");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
+		} 
 	}
 }

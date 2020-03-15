@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,7 +17,7 @@ public class Servidor {
 	public static void main(String args[]) throws IOException {
 		try {
 			final int porta = 3322;
-			int delay = 1500;
+			int delay = 1000;
 			System.out.println("Server alocado na porta: " + porta);
 			ServerSocket serverSocket = new ServerSocket(porta);
 			while (serverSocket.isBound()) {
@@ -29,12 +30,18 @@ public class Servidor {
 				mensagemServidor.writeObject(socket.getInetAddress().getHostAddress()
 						+ " ATIVADO " + delay);
 				
-				while (true) {
-					ObjectOutputStream msg = new ObjectOutputStream(socket.getOutputStream());
-					msg.flush();
-					msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "ºF\r\n");
-					Thread.sleep(delay);
-				}
+				new Thread(new ThreadEnviarMsg(socket, delay)).start();
+				
+//				while (true) {
+//					try {
+//						ObjectOutputStream msg = new ObjectOutputStream(socket.getOutputStream());
+//						msg.flush();
+//						msg.writeObject(ThreadLocalRandom.current().nextInt(0, 100) + "ºF\r\n");
+//						Thread.sleep(delay);
+//					} catch (SocketException e) {
+//						// TODO: handle exception
+//					}
+//				}
 			}
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
