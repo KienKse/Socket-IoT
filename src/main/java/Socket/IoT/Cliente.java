@@ -1,10 +1,6 @@
 package Socket.IoT;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
@@ -12,60 +8,34 @@ import java.util.Scanner;
 public class Cliente {
 	public static void main(String args[]) {
 		try {
-			String host = null;
-			int porta = 0;
+			String host;
+			int porta;
+			System.out.println("INICIANDO PROGRAMA");
 			System.out.println("Digite o {ip do host} e a {porta}, respectivamente");
-			
 			Scanner sc = new Scanner(System.in);
 			host = sc.next();
 			porta = sc.nextInt();
-	
+
+			Socket socket = new Socket(host, porta);
+			System.out.println("Conectado, aguardando mensagem do servidor...");
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			System.out.println("Mensagem Servidor: " + br.readLine());
+
 			while (true) {
-				Socket socket = new Socket(host, porta);
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//				System.out.println("msg cliente");
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-				
-				ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
-				String mensagemDoServidor = null;
-				try {
-					mensagemDoServidor = (String) entrada.readObject();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println(mensagemDoServidor);
-//				if(br.readLine() != null)
-//					System.out.println("SERVER_LOG: " + br.readLine());
-	
-//				BufferedReader userInputBR = new BufferedReader(new InputStreamReader(System.in));
-//				String userInput = userInputBR.readLine();
-				
-				Scanner sc2 = new Scanner(socket.getInputStream());
-				while (sc2.hasNextLine()) {
-//					System.out.println(sc.nextLine());
+				BufferedReader userInputBR = new BufferedReader(new InputStreamReader(System.in));
+				String userInput = userInputBR.readLine();
+				if(userInput != null) {
 					out.flush();
-					out.println(sc.nextLine() + "\r\n");
+					out.println(userInput + "\r\n");
+//					System.out.println("msg enviada");
 				}
-				
-				
-//				if ("bye".equalsIgnoreCase(userInput)) {
-//					socket.close();
-//					break;
-//				}
-				
-//				out.flush();
-//				out.println(userInput + "\r\n" + "\r\n");
-//				out.print("\r\n");
-		
-				System.out.println("SERVER_LOG: " + br.readLine());
 			}
-			
 		} catch (SocketException e) {
-			System.out.println("!!Conexão Encerrada!!");
-			// TODO: handle exception
+			System.out.println("!!Conexao Encerrada!!");
 		} catch (IOException e) {
-			System.out.println("Erro de conexão");
-			// TODO: handle exception
+			System.out.println("Erro de conexao");
 		}
 	}
 }
