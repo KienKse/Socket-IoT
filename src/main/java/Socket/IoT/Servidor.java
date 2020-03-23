@@ -2,6 +2,7 @@ package Socket.IoT;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -17,12 +18,13 @@ public class Servidor {
             while (servidor.isBound()) {
                 Socket clienteSocket = servidor.accept();
                 System.out.println("Cliente conectado " + clienteSocket.getInetAddress());
-                ObjectOutputStream mensagemServidor = new ObjectOutputStream(clienteSocket.getOutputStream());
-                mensagemServidor.flush();
-                mensagemServidor.writeObject("Conectado ao servidor - KIEN" + "\r\n");
+                PrintWriter out = new PrintWriter(clienteSocket.getOutputStream(), true);
+//                ObjectOutputStream mensagemServidor = new ObjectOutputStream(clienteSocket.getOutputStream());
+                out.flush();
+                out.println("Conectado ao servidor - KIEN");
                 Scanner entrada = new Scanner(clienteSocket.getInputStream());
                 while(entrada.hasNext()) {
-                    System.out.println(entrada.next());
+                    System.out.println(entrada.nextLine());
                 }
             }
         } catch (IOException e) {
