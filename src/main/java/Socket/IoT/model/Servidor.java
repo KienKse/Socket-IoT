@@ -8,19 +8,14 @@ public class Servidor {
 	public static void main(String args[]) {
 		try {
 			final int porta = 8082;
-			int delay = 30000;
 			System.out.println("Server alocado na porta: " + porta);
 			ServerSocket serverSocket = new ServerSocket(porta);
 			while (serverSocket.isBound()) {
-				Socket socket = serverSocket.accept();
+				Socket cliente = serverSocket.accept();
 
-				System.out.println("Cliente conectado: " + socket.getInetAddress().getHostAddress());
+				System.out.println("Cliente conectado: " + cliente.getInetAddress());
 
-				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-				out.flush();
-				out.println("kien_device ATIVADO " + (delay/1000));
-
-				new Thread(new ThreadEnviarMsg(socket, delay)).start();
+				new Thread(new ThreadAguardoMsg(cliente)).start();
 			}
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());

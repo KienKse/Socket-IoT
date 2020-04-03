@@ -13,10 +13,10 @@ public class Cliente {
 		try {
 			String host;
 			int porta;
-			System.out.println("GO AHEAD BEAUTY...\nSe conecte");
+			System.out.println("GO AHEAD BEAUTY...");
 			Scanner sc = new Scanner(System.in);
 			String[] comando = sc.nextLine().split(" ");
-//			String[] comando = {"", "conectar", "servidor_teste"};
+//			String[] comando = {"Computador_K", "CONECTAR", "Temperatura_Sergio"};
 
 			if (comando[1].equalsIgnoreCase("CONECTAR")) {
 
@@ -33,9 +33,21 @@ public class Cliente {
 
 					Socket socket = new Socket(host, porta);
 
-					while(true){
-						BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-						System.out.println("Mensagem Servidor: " + br.readLine());
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    out.flush();
+                    out.println(comando[0] + " " +  comando [1] + " " +  comando[2]);
+
+                    String msgServ;
+
+                    while(true){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        msgServ = br.readLine();
+						if(msgServ != null) {
+                            System.out.println("Mensagem Servidor: " + msgServ);
+                        } else {
+                            System.out.println("Desconectado");
+                            throw new SocketException();
+                        }
 					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -49,6 +61,7 @@ public class Cliente {
 				System.out.println("O correto seria...\nDP1 CONECTAR DP2");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Ocorreu um erro inesperado");
 		}
 	}

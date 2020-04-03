@@ -1,22 +1,26 @@
 {
-	"Local": {
-		"ip":"localhost",
-		"porta":"8082"
-	},
-	"Temperatura_1":{
-		"ip":"192.168.1.17",
-		"porta":"8080"
-	},
-	"Temperatura_2": {
-		"ip":"192.168.1.18",
-		"porta":"9980"
-	},
-	"Umidade": {
-		"ip":"192.168.6.12",
-		"porta":"8089"
-	},
-	"servidor_teste": {
-		"ip":"0.tcp.ngrok.io",
-		"porta":""
-	}
+  "Local": {
+    "ip": "localhost",
+    "porta": "8082"
+  },
+  "Temperatura_K": {
+    "ip": "0.tcp.sa.ngrok.io",
+    "porta": "18352"
+  },
+  "Temperatura_J": {
+    "ip": "0.tcp.sa.ngrok.io",
+    "porta": "19920"
+  },
+  "Umidade": {
+    "ip": "0.tcp.sa.ngrok.io",
+    "porta": "11672"
+  },
+  "Temperatura_L": {
+    "ip": "0.tcp.sa.ngrok.io",
+    "porta": "14296"
+  },
+  "Temperatura_Sergio": {
+    "ip": "smbo.ddns.net",
+    "porta": "8082"
+  }
 }
