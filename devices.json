@@ -1,26 +1,10 @@
 {
-  "Local": {
+  "local": {
     "ip": "localhost",
     "porta": "8082"
   },
-  "Temperatura_K": {
-    "ip": "0.tcp.sa.ngrok.io",
-    "porta": "18352"
-  },
-  "Temperatura_J": {
-    "ip": "0.tcp.sa.ngrok.io",
-    "porta": "19920"
-  },
-  "Umidade": {
-    "ip": "0.tcp.sa.ngrok.io",
-    "porta": "11672"
-  },
-  "Temperatura_L": {
-    "ip": "0.tcp.sa.ngrok.io",
-    "porta": "14296"
-  },
-  "Temperatura_Sergio": {
-    "ip": "smbo.ddns.net",
-    "porta": "8082"
+  "central": {
+    "ip": "",
+    "porta": ""
   }
 }
