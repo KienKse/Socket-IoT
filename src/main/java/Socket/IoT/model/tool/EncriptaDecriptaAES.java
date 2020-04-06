@@ -8,7 +8,7 @@ import javax.crypto.Cipher;
 public class EncriptaDecriptaAES {
 
     static String IV = "AAAAAAAAAAAAAAAA";
-    static String textopuro = "CHEIO 2";
+    static String textopuro = "";
     static String chaveencriptacao = "0123456789abcdef";
 
     public static void main(String [] args) {
@@ -48,4 +48,27 @@ public class EncriptaDecriptaAES {
         return new String(decripta.doFinal(textoencriptado),"UTF-8");
     }
 
+    public static String getTextopuro() {
+        return textopuro;
+    }
+
+    public static void setTextopuro(String textopuro) {
+        EncriptaDecriptaAES.textopuro = textopuro;
+    }
+
+    public static String getIV() {
+        return IV;
+    }
+
+    public static void setIV(String IV) {
+        EncriptaDecriptaAES.IV = IV;
+    }
+
+    public static String getChaveencriptacao() {
+        return chaveencriptacao;
+    }
+
+    public static void setChaveencriptacao(String chaveencriptacao) {
+        EncriptaDecriptaAES.chaveencriptacao = chaveencriptacao;
+    }
 }
