@@ -8,11 +8,11 @@ import java.net.SocketException;
 
 public class Servidor {
 
-	private static final int ID_CONTAINER = 1;
+	private static final int ID_CONTAINER = 2;
 
 	public static void main(String args[]) {
 		try {
-			int portaServer = 8083;
+			int portaServer = 8082;
 			ServerSocket servidor = new ServerSocket(portaServer);
 			System.out.println("Servidor iniciado na porta " + portaServer);
 
@@ -26,8 +26,7 @@ public class Servidor {
 				BufferedReader entrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
 				String mensagemCliente = entrada.readLine();
 				System.out.println("Comando recebido: " + mensagemCliente);
-
-				if (mensagemCliente.equalsIgnoreCase("CHEGUEI_CONTAINER")) {
+				if (mensagemCliente.contains("CHEGUEI_CONTAINER")) {
 					esvaziarContainer(container);
 					int time = (int) (Math.random() * 10000) + 1000;
 					System.out.println(time);

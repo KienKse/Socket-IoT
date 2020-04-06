@@ -13,7 +13,7 @@ import java.net.SocketException;
 public class ThreadCliente implements Runnable {
 
     /** CENTRAL */
-    private static final String DEVICE = "local";
+    private static final String DEVICE = "central";
 
     private String msg;
 

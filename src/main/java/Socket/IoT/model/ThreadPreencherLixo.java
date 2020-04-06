@@ -15,24 +15,19 @@ public class ThreadPreencherLixo implements Runnable {
     @Override
     public void run() {
         if(!this.container.isCaminhao()) {
-            while (contadorContainer < 100) {
+            while(contadorContainer < 100) {
                 contadorContainer += (int) (Math.random() * 10);
-                System.out.println(Thread.currentThread().getName() + " - " + contadorContainer);
+                System.out.println(Thread.currentThread().getName() + " - " + (contadorContainer > 100 ? 100 : contadorContainer));
                 try {
                     Thread.sleep((int) (Math.random() * 2000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            for (int i = 0; i <= this.container.getTipoContainer().length - 1; i++) {
-                if (this.container.getTipoContainer()[i] == 0) {
-                    this.container.getTipoContainer()[i] = 1;
-                    //TODO: MUDAR FORMA DE OBTER TIPO DE LIXO
-                    String msg = "CHEIO " + conteverTipo(i) + " " + container.getIdContainer();
-                    new Thread(new ThreadCliente(msg)).start();
-                    System.out.println(msg);
-                    break;
-                }
+            atribuirLixo();
+            contadorContainer = 0;
+            if(isLotado()) {
+                new Thread(new ThreadCliente("CHEIO " + container.getIdContainer())).start();
             }
         } else {
             System.out.println("Esvaziando Container");
@@ -40,6 +35,27 @@ public class ThreadPreencherLixo implements Runnable {
             this.container.setCaminhao(false);
         }
         imprimirContainers();
+    }
+
+    private boolean isLotado() {
+        for (int i = 0; i < container.getTipoContainer().length; i++) {
+            if(container.getTipoContainer()[i] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void atribuirLixo() {
+        String msg = "";
+        for (int i = 0; i <= this.container.getTipoContainer().length - 1; i++) {
+            if (this.container.getTipoContainer()[i] == 0) {
+                this.container.getTipoContainer()[i] = 1;
+                //TODO: MUDAR FORMA DE OBTER TIPO DE LIXO
+                System.out.println("CHEIO " + conteverTipo(i) + " " + container.getIdContainer());
+                break;
+            }
+        }
     }
 
     private String conteverTipo(int i) {
